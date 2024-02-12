@@ -4,7 +4,10 @@ build:
 docker-build:
 	docker build -t go-httpenv:latest .
 
-docker-compose:
+docker-compose-up:
 	docker compose up -d
 
-.PHONY: docker-build build
+docker-compose-down:
+	docker compose down -v
+
+.PHONY: docker-build build docker-compose-up docker-compose-down
