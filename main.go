@@ -10,7 +10,7 @@ import (
 
 // Define a home handler function which writes a byte slice containing
 // all current environment variables as the response body.
-func home(w http.ResponseWriter, r *http.Request) {
+func getEnv(w http.ResponseWriter, r *http.Request) {
 	// Get all environment variables
 	envVariables := make(map[string]string)
 	for _, env := range os.Environ() {
@@ -42,9 +42,10 @@ func healthCheck(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	// Use the http.NewServeMux() function to initialize a new servemux, then
-	// register the home function as the handler for the "/" URL pattern.
+	// register the getEnv function as the handler for the "/env" URL pattern.
 	mux := http.NewServeMux()
-	mux.HandleFunc("/env", home)
+	mux.HandleFunc("/env", getEnv)
+	// Register the healthCheck function as the handler for the "/healthz" URL pattern as well.
 	mux.HandleFunc("/healthz", healthCheck)
 
 	// Use the http.ListenAndServe() function to start a new web server.
